@@ -27,7 +27,7 @@ extern pcg32_random_t pcg32_global;
 
 void rng_seed(uint64_t seed, uint64_t seq);
 
-inline uint32_t pcg32_random_r(pcg32_random_t *rng) {
+static inline uint32_t pcg32_random_r(pcg32_random_t *rng) {
   uint64_t oldstate = rng->state;
   // LCG step (pcg_setseq_64_step_r)
   rng->state = oldstate * 6364136223846793005ULL + (rng->inc | 1);
@@ -37,7 +37,7 @@ inline uint32_t pcg32_random_r(pcg32_random_t *rng) {
   uint32_t rot = oldstate >> 59u;
   return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
 }
-inline uint32_t rng_u(void) { return pcg32_random_r(&pcg32_global); }
+static inline uint32_t rng_u(void) { return pcg32_random_r(&pcg32_global); }
 
 float rng_f(void);
 
