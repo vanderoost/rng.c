@@ -33,9 +33,11 @@ void rng_seed(uint64_t seed, uint64_t seq) {
   pcg32_srandom_r(&pcg32_global, seed, seq);
 }
 
+// TODO(richard): More accurate and performant way to get floats
 static float uint32_max_inv = 1.0f / (UINT32_MAX + 1.0f);
 float rng_f(void) { return pcg32_random_r(&pcg32_global) * uint32_max_inv; }
 
+// TODO(richard): More accurate and performant way to sample a normal distribution
 float rng_norm(void) {
   float result = -6.0;
 

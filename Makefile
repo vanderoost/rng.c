@@ -44,4 +44,4 @@ clean:
 
 -include $(DEPS)
 
-.PHONY: all run watch clean
+.PHONY: all run hot clean
