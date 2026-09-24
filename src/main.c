@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define SAMPLE_COUNT (1 << 20)
+#define SAMPLE_COUNT 1000000
 
 int main(void) {
   rng_seed(time(NULL), 1);

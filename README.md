@@ -17,22 +17,29 @@ Generating a random 32-bit integer:
 uint32_t roll = rng_u();
 ```
 
+## Benchmark
+
+Run the benchmark with:
+
+```console
+make benchmark
+```
+
+Results on M2 Macbook Pro:
+
+```console
+rng_u   1.015 ns/call
+rand    6.626 ns/call
+```
+
 ## Blog article
 
-Read about how I created this library from scratch:
-[*TODO*](https://vanderoost.com/articles/)
+Read more about how and why I created this library:
+
+[Stop using `rand()`](https://vanderoost.com/articles/2026/09/25/stop-using-rand/)
 
 ## Screencast
 
-Walkthrough where I'm cooking this up from scratch:
+Walkthrough where I'm cooking up the code from scratch:
 
-*TODO*
-
-## License
-
-MIT — see [LICENSE](LICENSE).
-
-The PCG32 generator in `src/rng/` is derived from
-[imneme/pcg-c](https://github.com/imneme/pcg-c) by Melissa O'Neill and the PCG
-Project contributors, which is offered under `Apache-2.0 OR MIT`. It is used
-here under the MIT option, so this library is MIT throughout.
+[![Coding RNG from scratch in C](https://img.youtube.com/vi/-5NqTA-fDNQ/mqdefault.jpg)](https://youtu.be/-5NqTA-fDNQ)

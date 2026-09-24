@@ -19,11 +19,20 @@ DEPS = $(patsubst $(SRC)/%.c,$(OBJ)/%.d,$(ALL_SRCS))
 
 all: $(BINS)
 
+run: $(EXE)
+	@$(EXE)
+
+hot:
+	@find $(SRC) -type f | entr -c make run
+
 image.ppm: $(BIN)/rng_image
-	@time $(BIN)/rng_image
+	@time $<
 
 open: image.ppm
-	@open image.ppm
+	@open $<
+
+benchmark: $(BIN)/benchmark
+	@$<
 
 $(BIN)/%: $(OBJ)/%.o $(LIB_OBJS)
 	@mkdir -p $(@D)
@@ -32,12 +41,6 @@ $(BIN)/%: $(OBJ)/%.o $(LIB_OBJS)
 $(OBJ)/%.o: $(SRC)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $< -c -MMD -o $@
-
-run: $(EXE)
-	@$(EXE)
-
-hot:
-	@find $(SRC) -type f | entr -c make run
 
 clean:
 	@rm -rf $(BIN) $(OBJ)

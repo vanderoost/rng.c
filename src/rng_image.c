@@ -6,7 +6,7 @@
 
 #define RNG_FUN rng_u()
 
-#define SAMPLE_COUNT (1 << 26)
+#define SAMPLE_COUNT (1 << 20)
 
 #define WIDTH 960
 #define HEIGHT 540
