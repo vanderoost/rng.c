@@ -5,10 +5,10 @@ C library for generating pseudo random numbers. Using the principles from
 
 ## Example usage
 
-Seeding:
+Seeding (requires two ints):
 
 ```c
-uint32_t roll = rng_u();
+rng_seed(time(NULL), 1);
 ```
 
 Generating a random 32-bit integer:
