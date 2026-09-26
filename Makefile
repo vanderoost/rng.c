@@ -1,6 +1,6 @@
 CFLAGS = -Wall -Wextra -O3
 LDFLAGS =
-LDLIBS =
+LDLIBS = -lm
 
 NAME = main
 SRC = src
