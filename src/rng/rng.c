@@ -39,7 +39,7 @@ float rng_f(void) { return pcg32_random_r(&pcg32_global) * uint32_max_inv; }
 
 // TODO(richard): More accurate and performant way to sample a normal distribution
 float rng_norm(void) {
-  float result = -6.0;
+  float result = -6.0f;
 
   for (size_t i = 0; i < 12; ++i) {
     result += rng_f();

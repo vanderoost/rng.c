@@ -34,6 +34,14 @@ static uint32_t bench_rand(size_t n) {
   return sink;
 }
 
+static uint32_t bench_random(size_t n) {
+  uint32_t sink = 0;
+  for (size_t i = 0; i < n; ++i) {
+    sink ^= (uint32_t)random();
+  }
+  return sink;
+}
+
 static void bench(const char *name, bench_fn fn) {
   uint32_t sink = fn(CALLS / 10); // warm up caches and branch predictors
 
@@ -41,7 +49,6 @@ static void bench(const char *name, bench_fn fn) {
   for (size_t run = 0; run < RUNS; ++run) {
     uint64_t start = now_ns();
     sink ^= fn(CALLS);
-    (void)sink;
 
     double ns_per_call = (double)(now_ns() - start) / CALLS;
     if (ns_per_call < best) {
@@ -49,15 +56,16 @@ static void bench(const char *name, bench_fn fn) {
     }
   }
 
-  printf("%-6s %6.3f ns/call\n", name, best);
+  printf("%-6s %6.3f ns/call (sink %08x)\n", name, best, sink);
 }
 
 int main(void) {
   rng_seed(42, 1);
   srand(42);
 
-  bench("rng_u", bench_rng_u);
   bench("rand", bench_rand);
+  bench("random", bench_random);
+  bench("rng_u", bench_rng_u);
 
   return 0;
 }
