@@ -43,7 +43,7 @@ $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) $< -c -MMD -o $@
 
 clean:
-	@rm -rf $(BIN) $(OBJ)
+	@rm -rf $(BIN) $(OBJ) *.ppm
 
 -include $(DEPS)
 
