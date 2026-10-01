@@ -1,4 +1,4 @@
-# plt.c
+# rng.c
 
 C library for generating pseudo random numbers. Using the principles from
 [pcg-random.org](https://pcg-random.org).
