@@ -39,7 +39,9 @@ static inline uint32_t pcg32_random_r(pcg32_random_t *rng) {
 }
 static inline uint32_t rng_u(void) { return pcg32_random_r(&pcg32_global); }
 
-float rng_f(void);
+static inline float rng_f(void) {
+  return (pcg32_random_r(&pcg32_global) >> 8) * 0x1.0p-24f;
+}
 
 float rng_norm(void);
 
