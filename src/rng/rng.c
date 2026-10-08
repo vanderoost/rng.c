@@ -32,24 +32,3 @@ void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq) 
 void rng_seed(uint64_t seed, uint64_t seq) {
   pcg32_srandom_r(&pcg32_global, seed, seq);
 }
-
-// TODO(richard): More accurate and performant way to sample a normal distribution
-float rng_norm(void) {
-  float result = -6.0f;
-
-  for (size_t i = 0; i < 12; ++i) {
-    result += rng_f();
-  }
-
-  return result;
-}
-
-float rng_norm_n(size_t rounds) {
-  float result = -0.5 * rounds;
-
-  for (size_t i = 0; i < rounds; ++i) {
-    result += rng_f();
-  }
-
-  return result * sqrt(12.0f / rounds);
-}

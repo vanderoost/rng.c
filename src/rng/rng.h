@@ -15,8 +15,11 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <math.h>
 #include <stdint.h>
 #include <stdlib.h>
+
+#define RNG_ZIG_LAY_BITS 8
 
 typedef struct {
   uint64_t state;
@@ -24,6 +27,12 @@ typedef struct {
 } pcg32_random_t;
 
 extern pcg32_random_t pcg32_global;
+
+extern const float lay_xs[];
+extern const float lay_ys[];
+
+static inline float prob_dens(float x) { return expf(-0.5f * x * x); }
+static inline float prob_dens_inv(float y) { return sqrtf(-2.0f * logf(y)); }
 
 void rng_seed(uint64_t seed, uint64_t seq);
 
@@ -43,8 +52,42 @@ static inline float rng_f(void) {
   return (pcg32_random_r(&pcg32_global) >> 8) * 0x1.0p-24f;
 }
 
-float rng_norm(void);
+typedef union {
+  float f;
+  uint32_t u;
+} Bits;
 
-float rng_norm_n(size_t rounds);
+#define RNG_ZIG_LAY_MASK ((1u << RNG_ZIG_LAY_BITS) - 1)
+static inline float rng_norm(void) {
+  Bits x;
+  for (;;) {
+    uint32_t roll = pcg32_random_r(&pcg32_global);
+
+    uint32_t lay_ix = (roll >> 1) & RNG_ZIG_LAY_MASK;
+    x.f = (roll >> 9) * 0x1.0p-23f * lay_xs[lay_ix];
+
+    if (x.f > lay_xs[lay_ix + 1]) {
+      float lay_h = lay_ys[lay_ix + 1] - lay_ys[lay_ix];
+      float y = lay_ys[lay_ix] + rng_f() * lay_h;
+
+      if (y > prob_dens(x.f)) {
+        continue; // Reject
+      }
+    }
+
+    x.u |= roll << 31;
+    return x.f;
+  }
+}
+
+static inline float rng_norm_old(void) {
+  float result = -6.0f;
+
+  for (size_t i = 0; i < 12; ++i) {
+    result += rng_f();
+  }
+
+  return result;
+}
 
 #endif // _RNG_H
