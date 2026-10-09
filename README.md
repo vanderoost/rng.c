@@ -38,8 +38,12 @@ Read more about how and why I created this library:
 
 [Stop using `rand()`](https://vanderoost.com/articles/2026/09/25/stop-using-rand/)
 
-## Screencast
+## Screencasts
 
 Walkthrough where I'm cooking up the code from scratch:
 
 [![Coding RNG from scratch in C](https://img.youtube.com/vi/-5NqTA-fDNQ/mqdefault.jpg)](https://youtu.be/-5NqTA-fDNQ)
+
+Improving the random float generator:
+
+[![Generating better random floats in C](https://img.youtube.com/vi/qa83_KrkVIM/mqdefault.jpg)](https://youtu.be/qa83_KrkVIM)
